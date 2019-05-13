@@ -1,0 +1,24 @@
+{
+    "name": "weex-qrcode",
+    "version": "0.1.0",
+    "description": "qrcode component for weex",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zaaksam/weex-qrcode.git"
+    },
+    "keywords": [
+        "weex",
+        "qrcode",
+        "vue"
+    ],
+    "author": "Zaaksam",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/zaaksam/weex-qrcode/issues"
+    },
+    "homepage": "https://github.com/zaaksam/weex-qrcode#readme",
+    "dependencies": {
+        "qrcode-generator": "^1.4.3"
+    }
+}
