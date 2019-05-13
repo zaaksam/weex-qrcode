@@ -1,8 +1,9 @@
 {
     "name": "weex-qrcode",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "qrcode component for weex",
     "main": "index.js",
+    "types": "index.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/zaaksam/weex-qrcode.git"
@@ -12,7 +13,7 @@
         "qrcode",
         "vue"
     ],
-    "author": "Zaaksam",
+    "author": "zaaksam@qq.com",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/zaaksam/weex-qrcode/issues"
