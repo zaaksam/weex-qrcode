@@ -1,10 +1,21 @@
 <template>
-    <div :style="{'width': cell, 'height': cell, 'background-color': background}">
-        <div v-for="row in qrData" :style="{'flex-direction': 'row', 'height': row.cell}">
+    <div>
+        <div v-if="qrType=='gif'">
+            <!-- <image :src="qrGif" :style="{'height': cell, 'width': cell}"></image> -->
+        </div>
+        <div
+            v-if="qrType=='div'"
+            :style="{'width': cell, 'height': cell, 'background-color': background}"
+        >
             <div
-                v-for="col in row.cols"
-                :style="{'flex': 1, 'height': row.cell, 'width': row.cell, 'background-color': col.background}"
-            ></div>
+                v-for="row in qrData"
+                :style="{'flex-direction': 'row', 'justify-content': 'space-around', 'height': row.cell}"
+            >
+                <div
+                    v-for="col in row.cols"
+                    :style="{'flex': 1, 'height': row.cell, 'width': row.cell, 'background-color': col.background}"
+                ></div>
+            </div>
         </div>
     </div>
 </template>
@@ -24,45 +35,71 @@ export default {
         cell: {
             type: Number,
             default: 100
+        },
+        type: {
+            type: String,
+            default: 'div'
+        },
+        typeNumber: {
+            type: Number,
+            default: 0
+        },
+        errorCorrectionLevel: {
+            type: String,
+            default: 'H'
         }
     },
     data() {
         return {
             background: background,
-            qrData: []
+            qrData: [],
+            qrGif: '',
+            qrType: 'div'
         }
     },
     created() {
     },
     mounted() {
-        this.qrData = this.build(this.text, this.cell)
+        this.createQR(this.text, this.cell, this.type)
     },
     watch: {
         text(val) {
-            this.qrData = this.build(val, this.cell)
+            this.createQR(val, this.cell, this.type)
         },
         cell(val) {
-            this.qrData = this.build(this.text, val)
+            this.createQR(this.text, val, this.type)
         }
     },
     methods: {
-        build(text, cell) {
-            let qrData = []
+        createQR(text, cell, typ) {
+            this.qrType = typ
 
-            let qr = qrcode(0, 'H')
+            var qr = qrcode(this.typeNumber, this.errorCorrectionLevel)
             qr.addData(text);
             qr.make();
 
-            let tileCell = cell / qr.getModuleCount();
+            if (this.qrType == 'gif') {
+                this.qrGif = qr.createDataURL(this.cell, 0)
+                return
+            }
 
-            for (let row = 0; row < qr.getModuleCount(); row++) {
-                let tempRow = {
+            this.qrType = 'div'
+            this.qrData = this.createDivTag(qr, cell)
+        },
+        createDivTag(qr, cell) {
+            // \u0020 半角空格
+            var qrData = []
+
+            var tileCell = cell / qr.getModuleCount();
+
+            for (var row = 0; row < qr.getModuleCount(); row++) {
+                var tempRow = {
                     cell: tileCell,
                     cols: []
                 }
 
-                for (let col = 0; col < qr.getModuleCount(); col++) {
-                    let tempCol = {
+                for (var col = 0; col < qr.getModuleCount(); col++) {
+                    var tempCol = {
                         background: background
                     }
 
