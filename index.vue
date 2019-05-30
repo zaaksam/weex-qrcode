@@ -74,6 +74,8 @@ export default {
         createQR(text, cell, typ) {
             this.qrType = typ
 
+            qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8']
+
             var qr = qrcode(this.typeNumber, this.errorCorrectionLevel)
             qr.addData(text);
             qr.make();
