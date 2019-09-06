@@ -92,7 +92,7 @@ export default {
             // \u0020 半角空格
             var qrData = []
 
-            var tileCell = cell / qr.getModuleCount();
+            var tileCell = cell / qr.getModuleCount() + 'px';
 
             for (var row = 0; row < qr.getModuleCount(); row++) {
                 var tempRow = {
